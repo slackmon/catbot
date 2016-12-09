@@ -26,7 +26,7 @@ exports.handle = function (sender, pieces, storageFactory, callback, globalTopic
                     console.log("Match for " + reg + " is " + m2);
                     if (m2.length>0){
                         topics.push(topic + ' :' +  topic.toLowerCase() +':');
-                        topics[topic.toLowerCase()] = m2.length;
+                        topicCloud[topic.toLowerCase()] = m2.length;
                     }
                 }
 

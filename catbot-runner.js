@@ -29,9 +29,8 @@ CatRunner.prototype.init = function(client, events, tok) {
 	this.storageFactory = require("./storage_factory").StorageFactory;
 	this.channelRe = /#.*/;
 	this.userRe = /<@[UW][A-Za-z0-9]+>/;
-
-	console.log("initialized.");
 	this.regex = /^\?/;
+	console.log("initialized.");
 };
 
 CatRunner.prototype.initDB = function() {
@@ -66,7 +65,8 @@ CatRunner.prototype.initDB = function() {
 
 CatRunner.prototype.start = function() {
 	console.log("starting");
-	this.rtm.start();
+	this.startInfo = this.rtm.start();
+	console.dir(this.startInfo);
 
 	var self = this;
 	this.rtm.on(this.RTM_EVENTS.MESSAGE, function(m) {

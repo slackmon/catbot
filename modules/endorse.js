@@ -11,6 +11,17 @@ exports.handle = function (sender, pieces, storageFactory, callback, globalTopic
     console.log('Endorsing ' + user + ' for ' + endorsement);
 
     var userStorage = storageFactory.getUserStorage(user);
+
+    var topicStorage = storageFactory.getGlobalStorage(endorsement);
+    topicStorage.getItem('users', function(users) {
+        users = JSON.parse(users || '[]');
+
+        if (users.indexOf(user) == -1) {
+            users.push(user);
+            topicStorage.setItem('users', JSON.stringify(users));
+        }
+    });
+
     userStorage.getItem('endorsements', function(endorsements){
         endorsements = JSON.parse(endorsements || '{}');
 

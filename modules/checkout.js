@@ -28,31 +28,39 @@ exports.handle = function (sender, pieces, storageFactory, callback, globalTopic
                     if (m2.length>0){
                         topics.push(topic + ' :' +  topic.toLowerCase() +':');
                         topicCloud[topic.toLowerCase()] = m2.length;
+
+                        var topicStorage = storageFactory.getGlobalStorage(topic);
+                        topicStorage.getItem('users', function(users) {
+                            var newUsers = JSON.parse(users || '[]');
+                            for (var k=0; k < newUsers.length; k++) {
+
+                                if (users.indexOf(newUsers[k]) == -1) {
+                                    users.push(newUsers[k]);
+                                }
+                            }
+                        });
                     }
                 }
 
-                var topicStorage = storageFactory.getGlobalStorage(topic);
-                topicStorage.getItem('users', function(users) {
-                    users = JSON.parse(users || '[]');
 
+                // Not sure this will work here
+                if (topics.length > 0) {
                     var mentions = '';
                     if (users.length>0) {
                         mentions = '*recommended for:* ' + users.join(', ');
                     }
 
-                    if (topics.length > 0) {
-                        var linkStorage = storageFactory.getGlobalStorage(link);
-                        linkStorage.setItem('contains', JSON.stringify(topicCloud));
+                    var linkStorage = storageFactory.getGlobalStorage(link);
+                    linkStorage.setItem('contains', JSON.stringify(topicCloud));
 
-                        callback({
-                            'message': ':link: ' + link + ' has: ' + topics.join(', ') + mentions
-                        });
-                    } else {
-                        callback({
-                            'message': ':disappointed: ugh Sorry I could not find any relevant content for link: ' + link
-                        });
-                    }
-                });
+                    callback({
+                        'message': ':link: ' + link + ' has: ' + topics.join(', ') + mentions
+                    });
+                } else {
+                    callback({
+                        'message': ':disappointed: ugh Sorry I could not find any relevant content for link: ' + link
+                    });
+                }
 
             }
 

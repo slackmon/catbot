@@ -4,7 +4,7 @@ var globalTopics = ['Ruby', 'PHP', 'Slack', 'NodeJS', 'Director', 'Engineering',
 
 exports.handle = function (sender, pieces, storageFactory, callback) {
     var sentence = pieces.join(' ');
-    var m = sentence.match(/<(http.+)>/gi) || [];
+    var m = sentence.match(/\<(http.+)\>/gi) || [];
     for(var i=0; i < m.length; i++) {
         var link = m[i];
         console.log('Found link: ' + link);

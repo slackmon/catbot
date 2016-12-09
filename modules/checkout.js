@@ -29,26 +29,11 @@ exports.handle = function (sender, pieces, storageFactory, callback, globalTopic
                         topics.push(topic + ' :' +  topic.toLowerCase() +':');
                         topicCloud[topic.toLowerCase()] = m2.length;
 
-                        var topicStorage = storageFactory.getGlobalStorage(topic);
-                        topicStorage.getItem('users', function(users) {
-                            var newUsers = JSON.parse(users || '[]');
-                            for (var k=0; k < newUsers.length; k++) {
-
-                                if (users.indexOf(newUsers[k]) == -1) {
-                                    users.push(newUsers[k]);
-                                }
-                            }
-                        });
                     }
                 }
 
-
                 // Not sure this will work here
                 if (topics.length > 0) {
-                    var mentions = '';
-                    if (users.length>0) {
-                        mentions = '*recommended for:* ' + users.join(', ');
-                    }
 
                     var linkStorage = storageFactory.getGlobalStorage(link);
                     linkStorage.setItem('contains', JSON.stringify(topicCloud));

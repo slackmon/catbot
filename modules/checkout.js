@@ -1,11 +1,11 @@
 var textScraper = require('text-scraper');
 // TODO: Compute tag cloud from channel or interests
-var globalTopics = ['Ruby', 'PHP', 'Slack', 'NodeJS', 'engineer', 'Salesforce', 'Workday', 'analytics', 'enterprise'];
+var globalTopics = ['Ruby', 'PHP', 'Slack', 'NodeJS', 'Director', 'Engineering', 'Salesforce', 'Workday', 'Analytics', 'enterprise'];
 
 exports.handle = function (sender, pieces, storageFactory, callback) {
     var sentence = pieces.join(' ');
     var m = sentence.match(/<(http.+)>/gi) || [];
-    for(var i=1; i < m.length; i++) {
+    for(var i=0; i < m.length; i++) {
         var link = m[i];
         console.log('Found link: ' + link);
         var linkContent;

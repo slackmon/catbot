@@ -1,6 +1,7 @@
 var textScraper = require('text-scraper');
 // TODO: Compute tag cloud from channel or interests
-var globalTopics = ['Ruby', 'PHP', 'MySQL', 'NodeJS', 'Director', 'Engineering', 'Salesforce', 'Workday', 'Analytics', 'enterprise'];
+var globalTopics = ['Ruby', 'PHP', 'MySQL', 'NodeJS', 'Bots', 'Engineering', 'Salesforce', 'Workday',
+    'Golang', 'Jira', 'AWS', 'Java', 'Python', 'Javascript', 'Mulesoft'];
 
 exports.handle = function (sender, pieces, storageFactory, callback) {
     var sentence = pieces.join(' ');

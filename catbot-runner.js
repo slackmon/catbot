@@ -17,7 +17,7 @@ function CatRunner() {
 	console.log("constructed.");
 };
 
-CatRunner.prototype.init = function(client, events, tok) {
+CatRunner.prototype.init = function(client, events, tok, globalTopics) {
 	console.log("initializing.");
 	this.RtmClient = client;
 	this.RTM_EVENTS = events;
@@ -32,8 +32,7 @@ CatRunner.prototype.init = function(client, events, tok) {
 	this.regex = /^\?/;
 
 	// TODO read as custom emojis
-	this.globalTopics = ['Ruby', 'PHP', 'MySQL', 'NodeJS', 'Bots', 'Engineering', 'Salesforce', 'Workday',
-		'Golang', 'Jira', 'AWS', 'Java', 'Python', 'Javascript', 'Mulesoft'];
+	this.globalTopics = globalTopics;
 	console.log("initialized.");
 };
 

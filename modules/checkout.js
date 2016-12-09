@@ -18,6 +18,7 @@ exports.handle = function (sender, pieces, storageFactory, callback, globalTopic
                 var topicCloud = {};
                 var topics = [];
 
+                var users = [];
                 for (var j =0; j < globalTopics.length; j++){
                     var topic = globalTopics[j];
                     // console.log('Looking for ' + topic);
@@ -30,18 +31,29 @@ exports.handle = function (sender, pieces, storageFactory, callback, globalTopic
                     }
                 }
 
-                if (topics.length > 0) {
-                    var linkStorage = storageFactory.getGlobalStorage(link);
-                    linkStorage.setItem('contains', JSON.stringify(topicCloud));
+                var topicStorage = storageFactory.getGlobalStorage(topic);
+                topicStorage.getItem('users', function(users) {
+                    users = JSON.parse(users || '[]');
 
-                    callback({
-                        'message': ':link: ' + link + ' covers topics: ' + topics.join(', ')
-                    });
-                } else {
-                    callback({
-                        'message': ':disappointed: ugh Sorry I could not find any relevant content for link: ' + link
-                    });
-                }
+                    var mentions = '';
+                    if (users.length>0) {
+                        mentions = '*recommended for:* ' + users.join(', ');
+                    }
+
+                    if (topics.length > 0) {
+                        var linkStorage = storageFactory.getGlobalStorage(link);
+                        linkStorage.setItem('contains', JSON.stringify(topicCloud));
+
+                        callback({
+                            'message': ':link: ' + link + ' has: ' + topics.join(', ') + mentions
+                        });
+                    } else {
+                        callback({
+                            'message': ':disappointed: ugh Sorry I could not find any relevant content for link: ' + link
+                        });
+                    }
+                });
+
             }
 
         });

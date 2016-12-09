@@ -13,14 +13,14 @@ exports.handle = function (sender, pieces, storageFactory, callback, globalTopic
             if (err) {
                 console.log('Error reading link: ' + link + ' is ' + err);
             } else {
-                console.log('Content for link: ' + link + ' is:\n ' + res);
+                // console.log('Content for link: ' + link + ' is:\n ' + res);
                 linkContent = res;
                 var topicCloud = {};
                 var topics = [];
 
                 for (var j =0; j < globalTopics.length; j++){
                     var topic = globalTopics[j];
-                    console.log('Looking for ' + topic);
+                    // console.log('Looking for ' + topic);
                     var reg = RegExp('\\b' + topic + '\\b', 'gim');
                     var m2 = linkContent.match(reg) || [];
                     console.log("Match for " + reg + " is " + m2);

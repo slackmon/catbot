@@ -1,4 +1,4 @@
-exports.handle = function(sender, pieces, storageFactory, callback) {
+exports.handle = function(sender, pieces, storageFactory, callback, globalTopics) {
   var user = pieces.shift();
 
   var userStorage = storageFactory.getUserStorage(user);

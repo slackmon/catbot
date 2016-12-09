@@ -30,6 +30,10 @@ CatRunner.prototype.init = function(client, events, tok) {
 	this.channelRe = /#.*/;
 	this.userRe = /<@[UW][A-Za-z0-9]+>/;
 	this.regex = /^\?/;
+
+	// TODO read as custom emojis
+	this.globalTopics = ['Ruby', 'PHP', 'MySQL', 'NodeJS', 'Bots', 'Engineering', 'Salesforce', 'Workday',
+		'Golang', 'Jira', 'AWS', 'Java', 'Python', 'Javascript', 'Mulesoft'];
 	console.log("initialized.");
 };
 
@@ -136,7 +140,7 @@ CatRunner.prototype.handleRtmMessage = function(message) {
 							self.rtm.sendMessage(result.message, message.channel);
 						}
 					}
-			});
+			}, this.globalTopics);
 		} catch (e) {
 			console.log("Error in " + moduleName + ": " + e);
 		}

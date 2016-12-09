@@ -1,4 +1,4 @@
-exports.handle = function (sender, pieces, storageFactory, callback) {
+exports.handle = function (sender, pieces, storageFactory, callback, globalTopics) {
     var user = pieces.shift();
 
     // skip 'for' if first word of endorsement
@@ -20,10 +20,15 @@ exports.handle = function (sender, pieces, storageFactory, callback) {
             endorsements[endorsement] = 1;
         }
 
+        var emojiString = '';
+        if (globalTopics.indexOf(endorsement) >= 0) {
+            emojiString = ':' + emojiString.toLowerCase() + ':';
+        }
+
         userStorage.setItem('endorsements', JSON.stringify(endorsements));
 
         callback({
-            'message': user + ' has been endorsed for ' + endorsement
+            'message': ':star: ' + user + ' has been endorsed for ' + endorsement + emojiString
         });
     });
 }

@@ -3,7 +3,7 @@ var textScraper = require('text-scraper');
 var globalTopics = ['Ruby', 'PHP', 'Slack', 'NodeJS', 'engineer', 'Salesforce', 'Workday', 'analytics', 'enterprise'];
 
 exports.handle = function (sender, pieces, storageFactory, callback) {
-    var m = pieces.match(/<(http.+)>/gi) || [];
+    var m = pieces.join(' ').match(/<(http.+)>/gi) || [];
     for(var i=1; i < m.length; i++) {
         var link = m[i];
         console.log('Found link: ' + link);

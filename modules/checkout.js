@@ -23,7 +23,7 @@ exports.handle = function (sender, pieces, storageFactory, callback) {
         linkStorage.setItem('requires', JSON.stringify(skills));
 
         callback({
-            'message': 'Got it! ' + link + ' requires ' + skill
+            'message': 'Got it. Link: ' + link + ' requires ' + skill
         });
     });
 }

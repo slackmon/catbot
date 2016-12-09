@@ -21,7 +21,7 @@ exports.handle = function (sender, pieces, storageFactory, callback, globalTopic
         }
 
         var emojiString = '';
-        if (globalTopics.indexOf(endorsement) >= 0) {
+        if (globalTopics.indexOf(endorsement.toLowerCase()) >= 0) {
             emojiString = ' :' + endorsement.toLowerCase() + ':';
         }
 

@@ -4,8 +4,9 @@ var globalTopics = ['Ruby', 'PHP', 'Slack', 'NodeJS', 'Director', 'Engineering',
 
 exports.handle = function (sender, pieces, storageFactory, callback) {
     var sentence = pieces.join(' ');
-    var m = sentence.match(/\<(http.+)\>/gi) || [];
-    for(var i=0; i < m.length; i++) {
+    var regexp = /\<(http.+)\>/gi;
+    var m = regexp.exec(sentence) || [];
+    for(var i=1; i < m.length; i++) {
         var link = m[i];
         console.log('Found link: ' + link);
         var linkContent;
@@ -20,7 +21,7 @@ exports.handle = function (sender, pieces, storageFactory, callback) {
 
                 for (var j =0; j < globalTopics.length; j++){
                     var topic = globalTopics[j];
-                    var reg = RegExp(topic, 'gi');
+                    var reg = RegExp('\b' + topic + '\b', 'gi');
                     var m2 = linkContent.match(reg) || [];
                     if (m2.length>0){
                         topics.push(topic + ' :' +  topic.toLowerCase() +':');

@@ -15,6 +15,10 @@ function CatRunner() {
 	this.moduleStorage = undefined;
 
 	console.log("constructed.");
+
+	this.loves = require("./modules/loves.js");
+	console.log("Loves is");
+	console.dir(this.loves);
 };
 
 CatRunner.prototype.init = function(client, events, tok) {

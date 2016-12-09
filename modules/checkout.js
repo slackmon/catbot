@@ -21,8 +21,10 @@ exports.handle = function (sender, pieces, storageFactory, callback) {
 
                 for (var j =0; j < globalTopics.length; j++){
                     var topic = globalTopics[j];
-                    var reg = RegExp('\b' + topic + '\b', 'gi');
+                    console.log('Looking for ' + topic);
+                    var reg = RegExp('\b' + topic + '\b', 'gim');
                     var m2 = linkContent.match(reg) || [];
+                    console.log("Match is " + m2);
                     if (m2.length>0){
                         topics.push(topic + ' :' +  topic.toLowerCase() +':');
                         topics[topic.toLowerCase()] = m2.length;

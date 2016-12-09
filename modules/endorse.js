@@ -22,7 +22,7 @@ exports.handle = function (sender, pieces, storageFactory, callback, globalTopic
 
         var emojiString = '';
         if (globalTopics.indexOf(endorsement) >= 0) {
-            emojiString = ':' + endorsement.toLowerCase() + ':';
+            emojiString = ' :' + endorsement.toLowerCase() + ':';
         }
 
         userStorage.setItem('endorsements', JSON.stringify(endorsements));

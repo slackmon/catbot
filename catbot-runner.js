@@ -19,6 +19,10 @@ function CatRunner() {
 	this.loves = require("./modules/loves.js");
 	console.log("Loves is");
 	console.dir(this.loves);
+
+	this.checkout = require("./modules/checkout.js");
+	console.log("checkout is");
+	console.dir(this.checkout);
 };
 
 CatRunner.prototype.init = function(client, events, tok) {
@@ -88,6 +92,9 @@ CatRunner.prototype.start = function() {
 
 CatRunner.prototype.loader = function(moduleName) {
 	// don't throw if moduleName doesn't exist.
+	if (moduleName.match(/checkout/)) return this.checkout;
+	if (moduleName.match(/loves/)) return this.loves;
+
 	try { return require(moduleName); } catch (e) {console.log(e); };
 };
 

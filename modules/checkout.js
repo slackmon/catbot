@@ -18,7 +18,8 @@ exports.handle = function (sender, pieces, storageFactory, callback, globalTopic
                 var topicCloud = {};
                 var topics = [];
 
-                var users = [];
+                var recommendLevel = 0;
+                var recommend = null;
                 for (var j =0; j < globalTopics.length; j++){
                     var topic = globalTopics[j];
                     // console.log('Looking for ' + topic);
@@ -28,18 +29,19 @@ exports.handle = function (sender, pieces, storageFactory, callback, globalTopic
                     if (m2.length>0){
                         topics.push(topic + ' :' +  topic.toLowerCase() +':');
                         topicCloud[topic.toLowerCase()] = m2.length;
-
+                        if (m2.length > recommendLevel) {
+                            recommend = topic;
+                        }
                     }
                 }
 
-                // Not sure this will work here
                 if (topics.length > 0) {
-
                     var linkStorage = storageFactory.getGlobalStorage(link);
                     linkStorage.setItem('contains', JSON.stringify(topicCloud));
 
                     callback({
-                        'message': ':link: ' + link + ' has: ' + topics.join(', ') + mentions
+                        'message': ':link: ' + link + ' has: ' + topics.join(', '),
+                        'next' : '?recommend ' + recommend
                     });
                 } else {
                     callback({

@@ -36,6 +36,7 @@
     "node-localstorage": "^1.3.0",
     "nodeunit": "^0.9.5",
     "sanitize-filename": "^1.6.1",
-    "sprintf": "^0.1.5"
+    "sprintf": "^0.1.5",
+    "text-scraper" : "^0.1.2"
   }
 }

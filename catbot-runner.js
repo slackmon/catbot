@@ -17,7 +17,7 @@ function CatRunner() {
 	console.log("constructed.");
 };
 
-CatRunner.prototype.init = function(client, events, tok) {
+CatRunner.prototype.init = function(client, events, tok, globalTopics) {
 	console.log("initializing.");
 	this.RtmClient = client;
 	this.RTM_EVENTS = events;
@@ -29,9 +29,11 @@ CatRunner.prototype.init = function(client, events, tok) {
 	this.storageFactory = require("./storage_factory").StorageFactory;
 	this.channelRe = /#.*/;
 	this.userRe = /<@[UW][A-Za-z0-9]+>/;
-
-	console.log("initialized.");
 	this.regex = /^\?/;
+
+	// TODO read as custom emojis
+	this.globalTopics = globalTopics;
+	console.log("initialized.");
 };
 
 CatRunner.prototype.initDB = function() {
@@ -66,7 +68,8 @@ CatRunner.prototype.initDB = function() {
 
 CatRunner.prototype.start = function() {
 	console.log("starting");
-	this.rtm.start();
+	this.startInfo = this.rtm.start();
+	console.dir(this.startInfo);
 
 	var self = this;
 	this.rtm.on(this.RTM_EVENTS.MESSAGE, function(m) {
@@ -134,9 +137,12 @@ CatRunner.prototype.handleRtmMessage = function(message) {
 						if (result.message) {
 							// TODO: allow bots to return attachments; use them here.
 							self.rtm.sendMessage(result.message, message.channel);
+							if (result.next) {
+								self.rtm.sendMessage(result.next, message.channel);
+							}
 						}
 					}
-			});
+			}, this.globalTopics);
 		} catch (e) {
 			console.log("Error in " + moduleName + ": " + e);
 		}
